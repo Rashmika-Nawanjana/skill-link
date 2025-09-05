@@ -2,97 +2,33 @@
   "version": 2,
   "name": "skilllink",
   "builds": [
-    {
-      "src": "app.js",
-      "use": "@vercel/node"
-    }
+    { "src": "app.js", "use": "@vercel/node" }
   ],
   "routes": [
-    {
-      "src": "/public/(.*)",
-      "dest": "/public/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/app.js"
-    }
+    { "src": "/(css|js|images)/(.*)", "dest": "/public/$1/$2" },
+    { "src": "/public/(.*)", "dest": "/public/$1" },
+    { "src": "/(.*)", "dest": "/app.js" }
   ],
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "functions": {
-    "app.js": {
-      "maxDuration": 30
-    }
-  },
+  "env": { "NODE_ENV": "production" },
+  "functions": { "app.js": { "maxDuration": 30, "memory": 512 } },
   "headers": [
-    {
-      "source": "/public/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
-        }
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
       ]
     }
   ],
   "redirects": [
-    {
-      "source": "/home",
-      "destination": "/"
-    },
-    {
-      "source": "/skills",
-      "destination": "/categories"
-    },
-    {
-      "source": "/teachers",
-      "destination": "/mentors"
-    },
-    {
-      "source": "/signup",
-      "destination": "/learners/signup"
-    },
-    {
-      "source": "/login",
-      "destination": "/learners/login"
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/app.js"
-    }
+    { "source": "/home", "destination": "/" },
+    { "source": "/skills", "destination": "/categories" },
+    { "source": "/teachers", "destination": "/mentors" },
+    { "source": "/signup", "destination": "/learners/signup" },
+    { "source": "/login", "destination": "/learners/login" }
   ],
   "regions": ["iad1"],
   "installCommand": "npm install",
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "framework": null,
-  "outputDirectory": "public"
+  "devCommand": "npm run dev"
 }

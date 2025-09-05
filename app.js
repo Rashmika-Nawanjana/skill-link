@@ -45,10 +45,21 @@ app.use((err, req, res, next) => {
     });
 });
 
+// When deployed on Vercel we should export the app (serverless) instead of calling listen()
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`🚀 SkillLink server running on port ${PORT}`);
-    console.log(`📱 Access the app at: http://localhost:${PORT}`);
-    console.log(`📁 Views directory: ${path.join(__dirname, 'views')}`);
-    console.log(`🎨 Static files: ${path.join(__dirname, 'public')}`);
-});
+
+if (process.env.VERCEL) {
+    // Export the Express instance for Vercel's serverless function handler
+    module.exports = app;
+} else {
+    // Local development server
+    app.listen(PORT, () => {
+        console.log(`🚀 SkillLink server running on port ${PORT}`);
+        console.log(`📱 Access the app at: http://localhost:${PORT}`);
+        console.log(`📁 Views directory: ${path.join(__dirname, 'views')}`);
+        console.log(`🎨 Static files: ${path.join(__dirname, 'public')}`);
+    });
+}
+
+// Also export app explicitly (helps in tests / serverless)
+module.exports = app;
