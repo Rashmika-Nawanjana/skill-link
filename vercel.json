@@ -1,22 +1,21 @@
 {
   "version": 2,
   "name": "skilllink",
-  "builds": [
-    { "src": "app.js", "use": "@vercel/node" }
-  ],
+  "functions": {
+    "api/index.js": {
+      "runtime": "nodejs20.x",
+      "maxDuration": 30
+    }
+  },
   "routes": [
-    { "src": "/(.*)", "dest": "/app.js" }
+    { "src": "/(.*)", "dest": "api/index.js" }
   ],
-  "env": { "NODE_ENV": "production" },
-  "functions": { "app.js": { "maxDuration": 30 } },
   "redirects": [
-    { "source": "/home", "destination": "/" },
-    { "source": "/skills", "destination": "/categories" },
-    { "source": "/teachers", "destination": "/mentors" },
-    { "source": "/signup", "destination": "/learners/signup" },
-    { "source": "/login", "destination": "/learners/login" }
+    { "source": "/home", "destination": "/", "permanent": true },
+    { "source": "/skills", "destination": "/categories", "permanent": true },
+    { "source": "/teachers", "destination": "/mentors", "permanent": true },
+    { "source": "/signup", "destination": "/learners/signup", "permanent": true },
+    { "source": "/login", "destination": "/learners/login", "permanent": true }
   ],
-  "regions": ["iad1"],
-  "installCommand": "npm install",
-  "devCommand": "npm run dev"
+  "regions": ["iad1"]
 }
