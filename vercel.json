@@ -1,21 +1,15 @@
 {
   "version": 2,
-  "name": "skilllink",
-  "functions": {
-    "app.js": {
-      "runtime": "nodejs20.x",
-      "maxDuration": 30
+  "builds": [
+    {
+      "src": "app.js",
+      "use": "@vercel/node"
     }
-  },
+  ],
   "routes": [
-    { "src": "/(.*)", "dest": "app.js" }
-  ],
-  "redirects": [
-    { "source": "/home", "destination": "/", "permanent": true },
-    { "source": "/skills", "destination": "/categories", "permanent": true },
-    { "source": "/teachers", "destination": "/mentors", "permanent": true },
-    { "source": "/signup", "destination": "/learners/signup", "permanent": true },
-    { "source": "/login", "destination": "/learners/login", "permanent": true }
-  ],
-  "regions": ["iad1"]
+    {
+      "src": "/(.*)",
+      "dest": "app.js"
+    }
+  ]
 }
