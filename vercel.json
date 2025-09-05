@@ -2,21 +2,13 @@
   "version": 2,
   "name": "skilllink",
   "functions": {
-<<<<<<< HEAD
     "app.js": {
-=======
-    "api/index.js": {
->>>>>>> f67f101d7593a3e66324b96f7e8d3da1a45639ab
       "runtime": "nodejs20.x",
       "maxDuration": 30
     }
   },
   "routes": [
-<<<<<<< HEAD
     { "src": "/(.*)", "dest": "app.js" }
-=======
-    { "src": "/(.*)", "dest": "api/index.js" }
->>>>>>> f67f101d7593a3e66324b96f7e8d3da1a45639ab
   ],
   "redirects": [
     { "source": "/home", "destination": "/", "permanent": true },
@@ -26,8 +18,4 @@
     { "source": "/login", "destination": "/learners/login", "permanent": true }
   ],
   "regions": ["iad1"]
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f67f101d7593a3e66324b96f7e8d3da1a45639ab
