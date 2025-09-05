@@ -1,0 +1,241 @@
+<!-- Book Session Page -->
+<section style="padding: 2rem; background: #f7f7f7; min-height: 80vh;">
+    <div class="container">
+        <!-- Breadcrumb -->
+        <nav style="margin-bottom: 2rem;">
+            <a href="/mentors" style="color: #1dbf73; text-decoration: none;">← Back to Mentors</a>
+        </nav>
+        
+        <!-- Booking Header -->
+        <div class="profile-hero mb-3">
+            <h1 style="color: #222325; margin-bottom: 1rem;">Book a Session</h1>
+            <p style="color: #62646a; font-size: 1.1rem;">Choose your preferred time and confirm your booking</p>
+        </div>
+        
+        <!-- Booking Form -->
+        <div style="display: grid; grid-template-columns: 1fr 400px; gap: 3rem; align-items: start;">
+            <!-- Main Form -->
+            <div class="form-container" style="max-width: none;">
+                <h3 style="color: #222325; margin-bottom: 2rem;">Session Details</h3>
+                
+                <form action="/book-session" method="POST">
+                    <input type="hidden" name="mentorId" value="<%= mentorId %>">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Session Type</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem; border: 2px solid #e4e5e7; border-radius: 8px; cursor: pointer; transition: all 0.3s;">
+                                <input type="radio" name="sessionType" value="trial" required>
+                                <div>
+                                    <div style="font-weight: 600;">Trial Session</div>
+                                    <div style="color: #62646a; font-size: 0.9rem;">30 minutes - $20</div>
+                                </div>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem; border: 2px solid #e4e5e7; border-radius: 8px; cursor: pointer; transition: all 0.3s;">
+                                <input type="radio" name="sessionType" value="full" required>
+                                <div>
+                                    <div style="font-weight: 600;">Full Session</div>
+                                    <div style="color: #62646a; font-size: 0.9rem;">60 minutes - $35</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="date" class="form-label">Preferred Date</label>
+                        <input 
+                            type="date" 
+                            id="date" 
+                            name="date" 
+                            required 
+                            class="form-input"
+                            min="<%= new Date().toISOString().split('T')[0] %>"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Available Time Slots</label>
+                        <div class="availability-grid">
+                            <label class="time-slot">
+                                <input type="radio" name="timeSlot" value="09:00" required style="display: none;">
+                                9:00 AM
+                            </label>
+                            <label class="time-slot">
+                                <input type="radio" name="timeSlot" value="10:00" required style="display: none;">
+                                10:00 AM
+                            </label>
+                            <label class="time-slot">
+                                <input type="radio" name="timeSlot" value="11:00" required style="display: none;">
+                                11:00 AM
+                            </label>
+                            <label class="time-slot">
+                                <input type="radio" name="timeSlot" value="14:00" required style="display: none;">
+                                2:00 PM
+                            </label>
+                            <label class="time-slot">
+                                <input type="radio" name="timeSlot" value="15:00" required style="display: none;">
+                                3:00 PM
+                            </label>
+                            <label class="time-slot">
+                                <input type="radio" name="timeSlot" value="16:00" required style="display: none;">
+                                4:00 PM
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="timezone" class="form-label">Your Timezone</label>
+                        <select name="timezone" id="timezone" class="form-select" required>
+                            <option value="">Select your timezone</option>
+                            <option value="UTC-8">Pacific Time (UTC-8)</option>
+                            <option value="UTC-7">Mountain Time (UTC-7)</option>
+                            <option value="UTC-6">Central Time (UTC-6)</option>
+                            <option value="UTC-5">Eastern Time (UTC-5)</option>
+                            <option value="UTC+0">GMT (UTC+0)</option>
+                            <option value="UTC+1">Central European Time (UTC+1)</option>
+                            <option value="UTC+8">China Standard Time (UTC+8)</option>
+                            <option value="UTC+9">Japan Standard Time (UTC+9)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="goals" class="form-label">What are your learning goals?</label>
+                        <textarea 
+                            name="goals" 
+                            id="goals" 
+                            rows="4" 
+                            class="form-textarea"
+                            placeholder="Tell your mentor what you'd like to achieve in this session..."
+                        ></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience" class="form-label">Your Experience Level</label>
+                        <select name="experience" id="experience" class="form-select" required>
+                            <option value="">Select your level</option>
+                            <option value="beginner">Complete Beginner</option>
+                            <option value="novice">Some Experience</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-full">Confirm Booking</button>
+                </form>
+            </div>
+            
+            <!-- Booking Summary -->
+            <div class="booking-card">
+                <h4 style="color: #222325; margin-bottom: 1rem;">Booking Summary</h4>
+                
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #e4e5e7;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #1dbf73, #19a463); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">🎻</div>
+                    <div>
+                        <div style="font-weight: 600; color: #222325;">Sarah Chen</div>
+                        <div style="color: #1dbf73; font-size: 0.9rem;">Violin & Music Theory</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="color: #62646a;">Session Type:</span>
+                        <span style="color: #222325; font-weight: 600;" id="selectedType">-</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="color: #62646a;">Date:</span>
+                        <span style="color: #222325; font-weight: 600;" id="selectedDate">-</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="color: #62646a;">Time:</span>
+                        <span style="color: #222325; font-weight: 600;" id="selectedTime">-</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <span style="color: #62646a;">Duration:</span>
+                        <span style="color: #222325; font-weight: 600;" id="duration">-</span>
+                    </div>
+                    
+                    <div style="padding-top: 1rem; border-top: 1px solid #e4e5e7;">
+                        <div style="display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 600; color: #222325;">
+                            <span>Total:</span>
+                            <span id="totalPrice">$0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="booking-security">
+                    <div class="security-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure payment processing</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-undo"></i>
+                        <span>Free cancellation up to 24h</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-headset"></i>
+                        <span>24/7 customer support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Important Notes -->
+        <div style="background: #e7f7f0; border: 1px solid #1dbf73; border-radius: 8px; padding: 1.5rem; margin-top: 2rem;">
+            <h4 style="color: #1dbf73; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-info-circle"></i>
+                Important Information
+            </h4>
+            <ul style="color: #62646a; line-height: 1.6; margin: 0; padding-left: 1.5rem;">
+                <li>You'll receive a video call link 30 minutes before your session</li>
+                <li>Please test your camera and microphone before the session</li>
+                <li>Sessions can be rescheduled up to 24 hours in advance</li>
+                <li>Recording is available upon request (additional fees may apply)</li>
+                <li>Payment will be processed after session completion</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<script>
+// Dynamic booking summary updates
+document.addEventListener('DOMContentLoaded', function() {
+    const sessionTypeRadios = document.querySelectorAll('input[name="sessionType"]');
+    const timeSlots = document.querySelectorAll('.time-slot');
+    const dateInput = document.getElementById('date');
+    
+    // Session type selection
+    sessionTypeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            const label = this.closest('label');
+            document.querySelectorAll('label').forEach(l => l.style.borderColor = '#e4e5e7');
+            label.style.borderColor = '#1dbf73';
+            
+            const type = this.value === 'trial' ? 'Trial Session (30 min)' : 'Full Session (60 min)';
+            const price = this.value === 'trial' ? '$20' : '$35';
+            const duration = this.value === 'trial' ? '30 minutes' : '60 minutes';
+            
+            document.getElementById('selectedType').textContent = type;
+            document.getElementById('totalPrice').textContent = price;
+            document.getElementById('duration').textContent = duration;
+        });
+    });
+    
+    // Time slot selection
+    timeSlots.forEach(slot => {
+        slot.addEventListener('click', function() {
+            timeSlots.forEach(s => s.classList.remove('selected'));
+            this.classList.add('selected');
+            const radio = this.querySelector('input[type="radio"]');
+            radio.checked = true;
+            document.getElementById('selectedTime').textContent = this.textContent.trim();
+        });
+    });
+    
+    // Date selection
+    dateInput.addEventListener('change', function() {
+        const date = new Date(this.value);
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('selectedDate').textContent = date.toLocaleDateString('en-US', options);
+    });
+});
+</script>

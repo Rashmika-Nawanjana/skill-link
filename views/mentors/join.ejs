@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.6;
+            color: #39424e;
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #ffffff;
+            color: #39424e;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #00b760;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #39424e;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #00b760;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #00b760;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #00b760;
+            border: 1px solid #00b760;
+        }
+
+        .btn-outline:hover {
+            background: #00b760;
+            color: white;
+        }
+
+        .btn-primary {
+            background: #00b760;
+            color: white;
+            border: 1px solid #00b760;
+        }
+
+        .btn-primary:hover {
+            background: #009954;
+            border-color: #009954;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Main content */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f9f5 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #39424e;
+            line-height: 1.2;
+        }
+
+        .hero .highlight {
+            color: #00b760;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: #5f6c80;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00b760;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-stat p {
+            color: #5f6c80;
+            font-weight: 500;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 80px 0;
+            background: #ffffff;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #39424e;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: #5f6c80;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit-card {
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            border-color: #00b760;
+            box-shadow: 0 8px 24px rgba(0, 183, 96, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .benefit-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #00b760, #009954);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card p {
+            color: #5f6c80;
+            line-height: 1.7;
+        }
+
+        /* How it Works */
+        .how-it-works {
+            padding: 80px 0;
+            background: #f8fffe;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: #00b760;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .step-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+        }
+
+        .step-card p {
+            color: #5f6c80;
+            line-height: 1.6;
+        }
+
+        /* Success Stories */
+        .success-stories {
+            padding: 80px 0;
+            background: #ffffff;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .story-card {
+            background: #f8fffe;
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #00b760;
+        }
+
+        .story-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .story-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00b760, #009954);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .story-info h4 {
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 0.25rem;
+        }
+
+        .story-info p {
+            color: #5f6c80;
+            font-size: 0.9rem;
+        }
+
+        .story-text {
+            color: #5f6c80;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .story-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .story-stat {
+            text-align: center;
+        }
+
+        .story-stat-number {
+            font-weight: 700;
+            color: #00b760;
+            font-size: 1.2rem;
+        }
+
+        .story-stat-label {
+            font-size: 0.8rem;
+            color: #5f6c80;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Application Form */
+        .application {
+            padding: 80px 0;
+            background: #f8fffe;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 4px 12px rgba(0, 183, 96, 0.1);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            color: #5f6c80;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00b760;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-group small {
+            color: #5f6c80;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        /* Requirements */
+        .requirements {
+            padding: 80px 0;
+            background: #ffffff;
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .requirement-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f8fffe;
+            border-radius: 8px;
+            border: 1px solid #e8f9f5;
+        }
+
+        .requirement-icon {
+            width: 40px;
+            height: 40px;
+            background: #00b760;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .requirement-content h4 {
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 0.5rem;
+        }
+
+        .requirement-content p {
+            color: #5f6c80;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #39424e;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #00b760;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #a3a8af;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #00b760;
+        }
+
+        .footer-section p {
+            color: #a3a8af;
+            line-height: 1.6;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #525863;
+            padding-top: 2rem;
+            text-align: center;
+            color: #a3a8af;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .story-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .benefit-card, .step-card, .story-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">
+                <i class="fas fa-link"></i> SkillLink
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/categories">Skills</a></li>
+                <li><a href="/how-it-works">How it Works</a></li>
+                <li><a href="/mentors">Find Mentors</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="/learners/login" class="btn btn-outline">Login</a>
+                <a href="/learners/signup" class="btn btn-primary">Join Now</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Share Your <span class="highlight">Expertise</span> with the World</h1>
+                <p>Join SkillLink as a mentor and inspire learners globally while building a thriving teaching career from anywhere</p>
+                
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <h3>$2,500+</h3>
+                        <p>Average Monthly Earnings</p>
+                    </div>
+                    <div class="hero-stat">
+                        <h3>500k+</h3>
+                        <p>Active Students</p>
+                    </div>
+                    <div class="hero-stat">
+                        <h3>190+</h3>
+                        <p>Countries Reached</p>
+                    </div>
+                    <div class="hero-stat">
+                        <h3>24/7</h3>
+                        <p>Flexible Schedule</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Why Teach on SkillLink?</h2>
+                    <p>Join thousands of expert mentors who are already building successful teaching careers</p>
+                </div>
+
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <h3>Earn Great Income</h3>
+                        <p>Set your own rates and keep 85-90% of your earnings. Top mentors earn $3,000+ monthly while doing what they love.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Flexible Schedule</h3>
+                        <p>Teach when you want, where you want. Perfect for full-time professionals, students, or anyone seeking schedule freedom.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>Global Reach</h3>
+                        <p>Connect with passionate students from around the world. Share your culture and skills across borders and time zones.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>All Tools Provided</h3>
+                        <p>We handle payments, scheduling, video calls, and student management. Focus on what you do best - teaching!</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Supportive Community</h3>
+                        <p>Join a network of passionate educators. Get mentoring support, teaching resources, and growth opportunities.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Grow Your Brand</h3>
+                        <p>Build your reputation as an expert in your field. Gain reviews, testimonials, and expand your professional network.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it Works -->
+        <section class="how-it-works">
+            <div class="container">
+                <div class="section-title">
+                    <h2>How to Get Started</h2>
+                    <p>From application to your first student in just a few simple steps</p>
+                </div>
+
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3>Apply & Get Verified</h3>
+                        <p>Submit your application with your skills, experience, and a short intro video. Our team will review and verify your expertise.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3>Create Your Profile</h3>
+                        <p>Build an compelling profile showcasing your skills, experience, and teaching style. Set your rates and availability.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3>Start Teaching</h3>
+                        <p>Students will find and book sessions with you. Conduct live video lessons and watch your student base grow!</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <h3>Get Paid Weekly</h3>
+                        <p>Receive payments automatically every week. Track your earnings, student progress, and build your teaching reputation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories -->
+        <section class="success-stories">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Success Stories</h2>
+                    <p>Meet some of our top-performing mentors and learn how they built thriving teaching careers</p>
+                </div>
+
+                <div class="stories-grid">
+                    <div class="story-card">
+                        <div class="story-header">
+                            <div class="story-avatar">MS</div>
+                            <div class="story-info">
+                                <h4>Maria Santos</h4>
+                                <p>Classical Guitar Mentor</p>
+                            </div>
+                        </div>
+                        <p class="story-text">
+                            "SkillLink changed my life! I went from teaching 5 local students to over 200 students worldwide. The flexibility lets me travel while teaching, and I've tripled my income."
+                        </p>
+                        <div class="story-stats">
+                            <div class="story-stat">
+                                <div class="story-stat-number">$4,200</div>
+                                <div class="story-stat-label">Monthly Earnings</div>
+                            </div>
+                            <div class="story-stat">
+                                <div class="story-stat-number">450+</div>
+                                <div class="story-stat-label">Students Taught</div>
+                            </div>
+                            <div class="story-stat">
+                                <div class="story-stat-number">5.0</div>
+                                <div class="story-stat-label">Rating</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-card">
+                        <div class="story-header">
+                            <div class="story-avatar">TY</div>
+                            <div class="story-info">
+                                <h4>Takeshi Yamamoto</h4>
+                                <p>Martial Arts Instructor</p>
+                            </div>
+                        </div>
+                        <p class="story-text">
+                            "Teaching kendo online seemed impossible until I joined SkillLink. The platform's tools help me demonstrate techniques effectively, and I've connected with students passionate about Japanese culture."
+                        </p>
+                        <div class="story-stats">
+                            <div class="story-stat">
+                                <div class="story-stat-number">$3,800</div>
+                                <div class="story-stat-label">Monthly Earnings</div>
+                            </div>
+                            <div class="story-stat">
+                                <div class="story-stat-number">680+</div>
+                                <div class="story-stat-label">Sessions</div>
+                            </div>
+                            <div class="story-stat">
+                                <div class="story-stat-number">4.9</div>
+                                <div class="story-stat-label">Rating</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-card">
+                        <div class="story-header">
+                            <div class="story-avatar">LM</div>
+                            <div class="story-info">
+                                <h4>Lucas Miller</h4>
+                                <p>Pottery & Ceramics Expert</p>
+                            </div>
+                        </div>
+                        <p class="story-text">
+                            "As a working artist, SkillLink provides steady income while I pursue my art. Students love learning traditional pottery techniques, and I've even sold pieces through connections made here!"
+                        </p>
+                        <div class="story-stats">
+                            <div class="story-stat">
+                                <div class="story-stat-number">$2,900</div>
+                                <div class="story-stat-label">Monthly Earnings</div>
+                            </div>
+                            <div class="story-stat">
+                                <div class="story-stat-number">320+</div>
+                                <div class="story-stat-label">Students</div>
+                            </div>
+                            <div class="story-stat">
+                                <div class="story-stat-number">4.8</div>
+                                <div class="story-stat-label">Rating</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Requirements -->
+        <section class="requirements">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Mentor Requirements</h2>
+                    <p>We maintain high standards to ensure the best learning experience for our students</p>
+                </div>
+
+                <div class="requirements-grid">
+                    <div class="requirement-item">
+                        <div class="requirement-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="requirement-content">
+                            <h4>Proven Expertise</h4>
+                            <p>Demonstrate your skills through certifications, portfolio, or professional experience</p>
+                        </div>
+                    </div>
+
+                    <div class="requirement-item">
+                        <div class="requirement-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="requirement-content">
+                            <h4>Clear Communication</h4>
+                            <p>Fluent in English or other major languages with excellent communication skills</p>
+                        </div>
+                    </div>
+
+                    <div class="requirement-item">
+                        <div class="requirement-icon">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <div class="requirement-content">
+                            <h4>Reliable Internet</h4>
+                            <p>Stable high-speed internet connection for smooth video sessions</p>
+                        </div>
+                    </div>
+
+                    <div class="requirement-item">
+                        <div class="requirement-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="requirement-content">
+                            <h4>Video Equipment</h4>
+                            <p>HD webcam and quality microphone for professional presentation</p>
+                        </div>
+                    </div>
+
+                    <div class="requirement-item">
+                        <div class="requirement-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="requirement-content">
+                            <h4>Passion for Teaching</h4>
+                            <p>Genuine enthusiasm for sharing knowledge and helping students succeed</p>
+                        </div>
+                    </div>
+
+                    <div class="requirement-item">
+                        <div class="requirement-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="requirement-content">
+                            <h4>Time Commitment</h4>
+                            <p>Minimum 5 hours per week availability with consistent scheduling</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Form -->
+        <section class="application">
+            <div class="container">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2>Apply to Become a Mentor</h2>
+                        <p>Join our community of expert instructors and start your teaching journey today</p>
+                    </div>
+
+                    <form id="mentorApplication" method="POST" action="/mentors/apply">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="country">Country *</label>
+                                <select id="country" name="country" required>
+                                    <option value="">Select your country</option>
+                                    <option value="US">United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="DE">Germany</option>
+                                    <option value="FR">France</option>
+                                    <option value="ES">Spain</option>
+                                    <option value="IT">Italy</option>
+                                    <option value="JP">Japan</option>
+                                    <option value="KR">South Korea</option>
+                                    <option value="IN">India</option>
+                                    <option value="BR">Brazil</option>
+                                    <option value="MX">Mexico</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="timezone">Timezone *</label>
+                                <select id="timezone" name="timezone" required>
+                                    <option value="">Select your timezone</option>
+                                    <option value="UTC-12">UTC-12</option>
+                                    <option value="UTC-11">UTC-11</option>
+                                    <option value="UTC-10">UTC-10</option>
+                                    <option value="UTC-9">UTC-9</option>
+                                    <option value="UTC-8">UTC-8 (PST)</option>
+                                    <option value="UTC-7">UTC-7 (MST)</option>
+                                    <option value="UTC-6">UTC-6 (CST)</option>
+                                    <option value="UTC-5">UTC-5 (EST)</option>
+                                    <option value="UTC-4">UTC-4</option>
+                                    <option value="UTC-3">UTC-3</option>
+                                    <option value="UTC-2">UTC-2</option>
+                                    <option value="UTC-1">UTC-1</option>
+                                    <option value="UTC+0">UTC+0 (GMT)</option>
+                                    <option value="UTC+1">UTC+1 (CET)</option>
+                                    <option value="UTC+2">UTC+2</option>
+                                    <option value="UTC+3">UTC+3</option>
+                                    <option value="UTC+4">UTC+4</option>
+                                    <option value="UTC+5">UTC+5</option>
+                                    <option value="UTC+6">UTC+6</option>
+                                    <option value="UTC+7">UTC+7</option>
+                                    <option value="UTC+8">UTC+8</option>
+                                    <option value="UTC+9">UTC+9 (JST)</option>
+                                    <option value="UTC+10">UTC+10</option>
+                                    <option value="UTC+11">UTC+11</option>
+                                    <option value="UTC+12">UTC+12</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="expertise">Primary Skill/Expertise *</label>
+                                <select id="expertise" name="expertise" required>
+                                    <option value="">Select your primary skill area</option>
+                                    <option value="music">Music & Sound</option>
+                                    <option value="crafts">Arts & Crafts</option>
+                                    <option value="martial-arts">Martial Arts</option>
+                                    <option value="sports">Sports & Fitness</option>
+                                    <option value="lifestyle">Lifestyle & Wellness</option>
+                                    <option value="cultural">Cultural Arts</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="specificSkills">Specific Skills *</label>
+                                <input type="text" id="specificSkills" name="specificSkills" placeholder="e.g., Classical Guitar, Flamenco, Music Theory" required>
+                                <small>List the specific skills you can teach, separated by commas</small>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="experience">Teaching Experience *</label>
+                                <textarea id="experience" name="experience" placeholder="Describe your teaching background, certifications, and relevant experience..." required></textarea>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="bio">Personal Bio *</label>
+                                <textarea id="bio" name="bio" placeholder="Tell us about yourself, your passion for teaching, and what makes you unique..." required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hourlyRate">Desired Hourly Rate (USD) *</label>
+                                <input type="number" id="hourlyRate" name="hourlyRate" min="15" max="200" required>
+                                <small>Suggested range: $25-$75 per hour</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="availability">Weekly Availability (hours) *</label>
+                                <select id="availability" name="availability" required>
+                                    <option value="">Select hours per week</option>
+                                    <option value="5-10">5-10 hours</option>
+                                    <option value="10-20">10-20 hours</option>
+                                    <option value="20-30">20-30 hours</option>
+                                    <option value="30+">30+ hours</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="portfolio">Portfolio/Website URL</label>
+                                <input type="url" id="portfolio" name="portfolio" placeholder="https://yourwebsite.com">
+                                <small>Share a link to your work, portfolio, or professional website (optional)</small>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">I agree to the <a href="/terms" style="color: #00b760;">Terms of Service</a> and <a href="/privacy" style="color: #00b760;">Privacy Policy</a> *</label>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="newsletter" name="newsletter">
+                            <label for="newsletter">I'd like to receive updates about SkillLink mentor opportunities</label>
+                        </div>
+
+                        <div class="submit-section">
+                            <button type="submit" class="btn btn-primary btn-large">
+                                <i class="fas fa-paper-plane"></i> Submit Application
+                            </button>
+                            <p style="margin-top: 1rem; color: #5f6c80;">
+                                Our team will review your application within 2-3 business days
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SkillLink</h3>
+                    <p>Connecting learners with skilled mentors worldwide for unique, hands-on learning experiences.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>For Learners</h3>
+                    <ul>
+                        <li><a href="/categories">Browse Skills</a></li>
+                        <li><a href="/mentors">Find Mentors</a></li>
+                        <li><a href="/how-it-works">How it Works</a></li>
+                        <li><a href="/pricing">Pricing</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>For Mentors</h3>
+                    <ul>
+                        <li><a href="/mentors/join">Become a Mentor</a></li>
+                        <li><a href="/mentor-resources">Resources</a></li>
+                        <li><a href="/mentor-support">Support</a></li>
+                        <li><a href="/earnings">Earnings</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="/help">Help Center</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 SkillLink. All rights reserved. Made with 💚 for passionate learners worldwide.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Form validation and submission
+        document.getElementById('mentorApplication').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic validation
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#dc3545';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#e9ecef';
+                }
+            });
+            
+            if (isValid) {
+                // Show success message (in real app, this would submit to server)
+                alert('Application submitted successfully! We\'ll review your application within 2-3 business days.');
+                this.reset();
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 2px 10px rgba(0, 183, 96, 0.1)';
+                header.style.borderBottom = '1px solid #00b760';
+            } else {
+                header.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                header.style.borderBottom = '1px solid #e9ecef';
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

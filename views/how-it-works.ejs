@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.6;
+            color: #39424e;
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #ffffff;
+            color: #39424e;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #00b760;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #39424e;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #00b760;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #00b760;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #00b760;
+            border: 1px solid #00b760;
+        }
+
+        .btn-outline:hover {
+            background: #00b760;
+            color: white;
+        }
+
+        .btn-primary {
+            background: #00b760;
+            color: white;
+            border: 1px solid #00b760;
+        }
+
+        .btn-primary:hover {
+            background: #009954;
+            border-color: #009954;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Main content */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f9f5 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #39424e;
+            line-height: 1.2;
+        }
+
+        .hero .highlight {
+            color: #00b760;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: #5f6c80;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-video {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 183, 96, 0.1);
+            border: 1px solid #e8f9f5;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #e8f9f5 0%, #f8fffe 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border: 2px dashed #00b760;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .video-placeholder:hover {
+            background: linear-gradient(135deg, #00b760 0%, #009954 100%);
+            color: white;
+        }
+
+        .video-placeholder i {
+            font-size: 4rem;
+            color: #00b760;
+            margin-bottom: 1rem;
+            transition: color 0.3s;
+        }
+
+        .video-placeholder:hover i {
+            color: white;
+        }
+
+        .video-placeholder h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-placeholder p {
+            color: #5f6c80;
+            margin: 0;
+        }
+
+        .video-placeholder:hover p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Process Steps */
+        .process-steps {
+            padding: 80px 0;
+            background: #ffffff;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #39424e;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: #5f6c80;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .steps-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .steps-line {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, #00b760 0%, #009954 100%);
+            z-index: 1;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-item {
+            text-align: center;
+            background: white;
+            padding: 2rem 1rem;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .step-item:hover {
+            border-color: #00b760;
+            box-shadow: 0 8px 24px rgba(0, 183, 96, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #00b760, #009954);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+            border: 4px solid white;
+            box-shadow: 0 4px 12px rgba(0, 183, 96, 0.3);
+        }
+
+        .step-item h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 1rem;
+        }
+
+        .step-item p {
+            color: #5f6c80;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .step-features {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: left;
+        }
+
+        .step-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #5f6c80;
+        }
+
+        .step-feature i {
+            color: #00b760;
+            width: 16px;
+        }
+
+        /* Features Comparison */
+        .features-comparison {
+            padding: 80px 0;
+            background: #f8fffe;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .comparison-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+
+        .comparison-card.skilllink {
+            border-color: #00b760;
+            box-shadow: 0 8px 24px rgba(0, 183, 96, 0.15);
+        }
+
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .comparison-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .comparison-card.skilllink .comparison-icon {
+            background: linear-gradient(135deg, #00b760, #009954);
+            color: white;
+        }
+
+        .comparison-card.traditional .comparison-icon {
+            background: #e9ecef;
+            color: #5f6c80;
+        }
+
+        .comparison-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #39424e;
+        }
+
+        .comparison-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .comparison-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .comparison-card.skilllink .feature-icon {
+            background: #00b760;
+            color: white;
+        }
+
+        .comparison-card.traditional .feature-icon {
+            background: #dc3545;
+            color: white;
+        }
+
+        .feature-text {
+            color: #5f6c80;
+            line-height: 1.5;
+        }
+
+        /* Interactive Demo */
+        .interactive-demo {
+            padding: 80px 0;
+            background: #ffffff;
+        }
+
+        .demo-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 183, 96, 0.1);
+        }
+
+        .demo-header {
+            background: linear-gradient(135deg, #00b760, #009954);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .demo-header h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-content {
+            padding: 2rem;
+        }
+
+        .demo-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .demo-tab {
+            padding: 1rem 1.5rem;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-weight: 500;
+            color: #5f6c80;
+            transition: all 0.3s;
+        }
+
+        .demo-tab.active {
+            color: #00b760;
+            border-bottom-color: #00b760;
+        }
+
+        .demo-panel {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .demo-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .demo-mockup {
+            background: #f8fffe;
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid #e8f9f5;
+        }
+
+        .mockup-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .mockup-user {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .mockup-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00b760, #009954);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .mockup-details h4 {
+            font-weight: 600;
+            color: #39424e;
+            font-size: 0.95rem;
+        }
+
+        .mockup-details p {
+            color: #5f6c80;
+            font-size: 0.85rem;
+        }
+
+        .mockup-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #00b760;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 80px 0;
+            background: #f8fffe;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 1.5rem;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #39424e;
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #f8fffe;
+        }
+
+        .faq-question i {
+            color: #00b760;
+            transition: transform 0.3s;
+        }
+
+        .faq-question.active i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-answer.active {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 200px;
+        }
+
+        .faq-answer p {
+            color: #5f6c80;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #00b760 0%, #009954 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-section .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-section .btn-outline:hover {
+            background: white;
+            color: #00b760;
+        }
+
+        .cta-section .btn-primary {
+            background: white;
+            color: #00b760;
+            border: 2px solid white;
+        }
+
+        .cta-section .btn-primary:hover {
+            background: transparent;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: #39424e;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #00b760;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #a3a8af;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #00b760;
+        }
+
+        .footer-section p {
+            color: #a3a8af;
+            line-height: 1.6;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #525863;
+            padding-top: 2rem;
+            text-align: center;
+            color: #a3a8af;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 968px) {
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .steps-line {
+                display: none;
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .demo-tabs {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-item, .comparison-card, .faq-item {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">
+                <i class="fas fa-link"></i> SkillLink
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/categories">Skills</a></li>
+                <li><a href="/how-it-works" class="active">How it Works</a></li>
+                <li><a href="/mentors">Find Mentors</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="/learners/login" class="btn btn-outline">Login</a>
+                <a href="/learners/signup" class="btn btn-primary">Join Now</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>How <span class="highlight">SkillLink</span> Works</h1>
+                <p>Discover how our platform connects passionate learners with expert mentors for live, interactive skill learning sessions</p>
+                
+                <div class="hero-video">
+                    <div class="video-placeholder" onclick="playIntroVideo()">
+                        <i class="fas fa-play-circle"></i>
+                        <h3>Watch How It Works</h3>
+                        <p>See SkillLink in action - 2 minute overview</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Steps -->
+        <section class="process-steps">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Your Learning Journey in 4 Simple Steps</h2>
+                    <p>From discovery to mastery, we make learning unique skills simple and engaging</p>
+                </div>
+
+                <div class="steps-container">
+                    <div class="steps-line"></div>
+                    <div class="steps-grid">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <h3>Discover & Browse</h3>
+                            <p>Explore our diverse skill categories and find the perfect mentor for your learning goals.</p>
+                            <div class="step-features">
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>50+ unique skill categories</span>
+                                </div>
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>Detailed mentor profiles</span>
+                                </div>
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>Read reviews & ratings</span>
+                                </div>
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>Compare prices & styles</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <h3>Book & Schedule</h3>
+                            <p>Choose your preferred time slot and book a session that fits your schedule perfectly.</p>
+                            <div class="step-features">
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>Real-time availability</span>
+                                </div>
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>Instant confirmation</span>
+                                </div>
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>Calendar integration</span>
+                                </div>
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>Easy rescheduling</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <h3>Learn Live</h3>
+                            <p>Join your interactive video session and receive personalized, real-time instruction from your mentor.</p>
+                            <div class="step-features">
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>HD video quality</span>
+                                </div>
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>Interactive tools</span>
+                                </div>
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>Screen sharing</span>
+                                </div>
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>Session recording</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <h3>Track & Grow</h3>
+                            <p>Monitor your progress, practice with provided materials, and book follow-up sessions to advance your skills.</p>
+                            <div class="step-features">
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>Progress tracking</span>
+                                </div>
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>Practice materials</span>
+                                </div>
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>Skill certificates</span>
+                                </div>
+                                <div class="step-feature">
+                                    <i class="fas fa-check"></i>
+                                    <span>Community support</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Comparison -->
+        <section class="features-comparison">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Why Choose SkillLink Over Traditional Learning?</h2>
+                    <p>See how we're revolutionizing skill learning with live, personalized instruction</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card skilllink">
+                        <div class="comparison-header">
+                            <div class="comparison-icon">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <div class="comparison-title">SkillLink Live Learning</div>
+                        </div>
+                        <div class="comparison-features">
+                            <div class="comparison-feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="feature-text">Live, real-time interaction with expert mentors</div>
+                            </div>
+                            <div class="comparison-feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="feature-text">Personalized feedback and correction</div>
+                            </div>
+                            <div class="comparison-feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="feature-text">Flexible scheduling across time zones</div>
+                            </div>
+                            <div class="comparison-feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="feature-text">Global access to diverse teaching styles</div>
+                            </div>
+                            <div class="comparison-feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="feature-text">Unique, cultural, and creative skills focus</div>
+                            </div>
+                            <div class="comparison-feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="feature-text">Progress tracking and skill certification</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comparison-card traditional">
+                        <div class="comparison-header">
+                            <div class="comparison-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="comparison-title">Traditional Online Learning</div>
+                        </div>
+                        <div class="comparison-features">
+                            <div class="comparison-feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-times"></i>
+                                </div>
+                                <div class="feature-text">Pre-recorded videos with no interaction</div>
+                            </div>
+                            <div class="comparison-feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-times"></i>
+                                </div>
+                                <div class="feature-text">No real-time feedback or correction</div>
+                            </div>
+                            <div class="comparison-feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-times"></i>
+                                </div>
+                                <div class="feature-text">Fixed schedule or self-paced only</div>
+                            </div>
+                            <div class="comparison-feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-times"></i>
+                                </div>
+                                <div class="feature-text">Limited instructor accessibility</div>
+                            </div>
+                            <div class="comparison-feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-times"></i>
+                                </div>
+                                <div class="feature-text">Focus mainly on academic/tech skills</div>
+                            </div>
+                            <div class="comparison-feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-times"></i>
+                                </div>
+                                <div class="feature-text">Basic completion certificates only</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Demo -->
+        <section class="interactive-demo">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Experience a Live Session</h2>
+                    <p>See what a typical SkillLink learning session looks like</p>
+                </div>
+
+                <div class="demo-container">
+                    <div class="demo-header">
+                        <h3>Live Session Demo</h3>
+                        <p>Guitar Lesson with Maria Santos</p>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-tabs">
+                            <button class="demo-tab active" onclick="showDemoPanel('booking')">Booking</button>
+                            <button class="demo-tab" onclick="showDemoPanel('session')">Live Session</button>
+                            <button class="demo-tab" onclick="showDemoPanel('followup')">Follow-up</button>
+                        </div>
+
+                        <div id="booking" class="demo-panel active">
+                            <div class="demo-mockup">
+                                <div class="mockup-header">
+                                    <div class="mockup-user">
+                                        <div class="mockup-avatar">MS</div>
+                                        <div class="mockup-details">
+                                            <h4>Maria Santos - Classical Guitar</h4>
+                                            <p>Barcelona, Spain • $45/hour • ⭐ 5.0 (89 reviews)</p>
+                                        </div>
+                                    </div>
+                                    <div class="mockup-status">
+                                        <i class="fas fa-calendar-check"></i>
+                                        Available Today
+                                    </div>
+                                </div>
+                                <p><strong>Booking Process:</strong></p>
+                                <p>1. Browse Maria's available time slots<br>
+                                2. Select your preferred time (e.g., 3:00 PM GMT+2)<br>
+                                3. Add session notes: "Beginner, interested in classical pieces"<br>
+                                4. Secure payment and instant confirmation<br>
+                                5. Receive video call link and preparation materials</p>
+                            </div>
+                        </div>
+
+                        <div id="session" class="demo-panel">
+                            <div class="demo-mockup">
+                                <div class="mockup-header">
+                                    <div class="mockup-user">
+                                        <div class="mockup-avatar">MS</div>
+                                        <div class="mockup-details">
+                                            <h4>Live Guitar Lesson in Progress</h4>
+                                            <p>Session Duration: 60 minutes • Recording: ON</p>
+                                        </div>
+                                    </div>
+                                    <div class="mockup-status">
+                                        <i class="fas fa-video"></i>
+                                        Live Now
+                                    </div>
+                                </div>
+                                <p><strong>Live Session Features:</strong></p>
+                                <p>• HD video with clear audio for technique demonstration<br>
+                                • Real-time feedback on finger positioning and posture<br>
+                                • Screen sharing for music sheets and chord diagrams<br>
+                                • Interactive tools for rhythm and timing practice<br>
+                                • Q&A throughout the session for immediate clarification</p>
+                            </div>
+                        </div>
+
+                        <div id="followup" class="demo-panel">
+                            <div class="demo-mockup">
+                                <div class="mockup-header">
+                                    <div class="mockup-user">
+                                        <div class="mockup-avatar">MS</div>
+                                        <div class="mockup-details">
+                                            <h4>Session Complete - Follow-up</h4>
+                                            <p>Session Recorded • Practice Materials Sent</p>
+                                        </div>
+                                    </div>
+                                    <div class="mockup-status">
+                                        <i class="fas fa-check-circle"></i>
+                                        Complete
+                                    </div>
+                                </div>
+                                <p><strong>After Your Session:</strong></p>
+                                <p>• Access recording of your lesson for review<br>
+                                • Receive personalized practice exercises<br>
+                                • Get progress assessment and next steps<br>
+                                • Book follow-up sessions with discount<br>
+                                • Join community forum for continued learning</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Everything you need to know about learning with SkillLink</p>
+                </div>
+
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            How do I know if a mentor is qualified?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>All SkillLink mentors go through a rigorous verification process. We check their credentials, experience, and require demonstration videos. Each mentor profile shows their qualifications, certifications, student reviews, and success rate.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            What equipment do I need for sessions?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>You'll need a device with camera and microphone (computer, tablet, or smartphone), stable internet connection, and any specific tools for your chosen skill (e.g., guitar, art supplies). Your mentor will provide a detailed equipment list when you book.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            Can I reschedule or cancel sessions?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes! You can reschedule up to 24 hours before your session without penalty. Cancellations made more than 48 hours in advance receive full refunds. Our flexible policy ensures you're never locked into inconvenient times.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            Are sessions recorded for later review?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, with your consent, sessions can be recorded and stored securely for 30 days. This allows you to review techniques, practice what you learned, and track your progress over time. You can opt out of recording if preferred.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            What if I'm not satisfied with a session?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We stand behind our mentors with a satisfaction guarantee. If you're not happy with your session, contact us within 24 hours for a full refund or free replacement session. Your learning experience is our priority.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            How do I track my learning progress?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Your SkillLink dashboard tracks completed sessions, skills learned, practice time, and mentor feedback. You'll receive progress reports and can earn skill certificates as you advance. Many mentors also provide personalized learning paths.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to Start Learning?</h2>
+                <p>Join thousands of students already mastering new skills with expert mentors worldwide</p>
+                <div class="cta-buttons">
+                    <a href="/categories" class="btn btn-primary btn-large">
+                        <i class="fas fa-search"></i> Explore Skills
+                    </a>
+                    <a href="/mentors" class="btn btn-outline btn-large">
+                        <i class="fas fa-users"></i> Find Mentors
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SkillLink</h3>
+                    <p>Connecting learners with skilled mentors worldwide for unique, hands-on learning experiences.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>For Learners</h3>
+                    <ul>
+                        <li><a href="/categories">Browse Skills</a></li>
+                        <li><a href="/mentors">Find Mentors</a></li>
+                        <li><a href="/how-it-works">How it Works</a></li>
+                        <li><a href="/pricing">Pricing</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>For Mentors</h3>
+                    <ul>
+                        <li><a href="/mentors/join">Become a Mentor</a></li>
+                        <li><a href="/mentor-resources">Resources</a></li>
+                        <li><a href="/mentor-support">Support</a></li>
+                        <li><a href="/earnings">Earnings</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="/help">Help Center</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 SkillLink. All rights reserved. Made with 💚 for passionate learners worldwide.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Video placeholder interaction
+        function playIntroVideo() {
+            alert('Demo video would play here! In a real application, this would open a video player with an introductory video about SkillLink.');
+        }
+
+        // Demo tabs functionality
+        function showDemoPanel(panelId) {
+            // Hide all panels
+            document.querySelectorAll('.demo-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.demo-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected panel and activate tab
+            document.getElementById(panelId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // FAQ functionality
+        function toggleFAQ(button) {
+            const answer = button.nextElementSibling;
+            const isActive = button.classList.contains('active');
+            
+            // Close all FAQs
+            document.querySelectorAll('.faq-question').forEach(q => {
+                q.classList.remove('active');
+                q.nextElementSibling.classList.remove('active');
+            });
+            
+            // If this wasn't active, open it
+            if (!isActive) {
+                button.classList.add('active');
+                answer.classList.add('active');
+            }
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 2px 10px rgba(0, 183, 96, 0.1)';
+                header.style.borderBottom = '1px solid #00b760';
+            } else {
+                header.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                header.style.borderBottom = '1px solid #e9ecef';
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.step-item, .comparison-card, .faq-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

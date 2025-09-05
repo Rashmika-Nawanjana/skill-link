@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.6;
+            color: #39424e;
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #ffffff;
+            color: #39424e;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #00b760;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #39424e;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #00b760;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #00b760;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #00b760;
+            border: 1px solid #00b760;
+        }
+
+        .btn-outline:hover {
+            background: #00b760;
+            color: white;
+        }
+
+        .btn-primary {
+            background: #00b760;
+            color: white;
+            border: 1px solid #00b760;
+        }
+
+        .btn-primary:hover {
+            background: #009954;
+            border-color: #009954;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Main content */
+        main {
+            margin-top: 80px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f9f5 100%);
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%2300b760" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #39424e;
+            line-height: 1.2;
+        }
+
+        .hero .highlight {
+            color: #00b760;
+            position: relative;
+        }
+
+        .hero .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00b760, #009954);
+            border-radius: 2px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: #5f6c80;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-search {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            position: relative;
+        }
+
+        .search-container {
+            display: flex;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 183, 96, 0.1);
+            border: 2px solid #e8f9f5;
+            overflow: hidden;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem 1rem 1rem 3rem;
+            border: none;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00b760;
+            font-size: 1.1rem;
+        }
+
+        .search-btn {
+            padding: 1rem 2rem;
+            background: #00b760;
+            color: white;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #009954;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-stat {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 183, 96, 0.1);
+            border: 1px solid #e8f9f5;
+        }
+
+        .hero-stat h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00b760;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-stat p {
+            color: #5f6c80;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 80px 0;
+            background: #ffffff;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #39424e;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: #5f6c80;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 183, 96, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .category-card:hover::before {
+            left: 100%;
+        }
+
+        .category-card:hover {
+            border-color: #00b760;
+            box-shadow: 0 8px 24px rgba(0, 183, 96, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #00b760, #009954);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .category-card h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 1rem;
+        }
+
+        .category-card p {
+            color: #5f6c80;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .category-stat {
+            flex: 1;
+        }
+
+        .category-stat .number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #00b760;
+        }
+
+        .category-stat .label {
+            font-size: 0.8rem;
+            color: #5f6c80;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Featured Mentors */
+        .featured-mentors {
+            padding: 80px 0;
+            background: #f8fffe;
+        }
+
+        .mentors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .mentor-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .mentor-card:hover {
+            border-color: #00b760;
+            box-shadow: 0 8px 24px rgba(0, 183, 96, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .mentor-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .mentor-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00b760, #009954);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .mentor-info h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 0.25rem;
+        }
+
+        .mentor-info p {
+            color: #5f6c80;
+            font-size: 0.9rem;
+        }
+
+        .mentor-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #ffc107;
+        }
+
+        .rating-text {
+            color: #5f6c80;
+            font-size: 0.9rem;
+        }
+
+        .mentor-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-tag {
+            background: #e8f9f5;
+            color: #00b760;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .mentor-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mentor-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #39424e;
+        }
+
+        .price-label {
+            font-size: 0.8rem;
+            color: #5f6c80;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 0;
+            background: #ffffff;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-item {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00b760, #009954);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+        }
+
+        .step-item h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 1rem;
+        }
+
+        .step-item p {
+            color: #5f6c80;
+            line-height: 1.6;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background: #f8fffe;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            position: relative;
+        }
+
+        .testimonial-quote {
+            font-size: 3rem;
+            color: #00b760;
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+            opacity: 0.3;
+        }
+
+        .testimonial-text {
+            color: #5f6c80;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00b760, #009954);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .author-info h5 {
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            color: #5f6c80;
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #00b760 0%, #009954 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-section .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-section .btn-outline:hover {
+            background: white;
+            color: #00b760;
+        }
+
+        .cta-section .btn-primary {
+            background: white;
+            color: #00b760;
+            border: 2px solid white;
+        }
+
+        .cta-section .btn-primary:hover {
+            background: transparent;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: #39424e;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #00b760;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #a3a8af;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #00b760;
+        }
+
+        .footer-section p {
+            color: #a3a8af;
+            line-height: 1.6;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #525863;
+            padding-top: 2rem;
+            text-align: center;
+            color: #a3a8af;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .categories-grid,
+            .mentors-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .category-card, .mentor-card, .testimonial-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .hero-stat {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-stat:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .hero-stat:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .hero-stat:nth-child(4) {
+            animation-delay: 1.5s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">
+                <i class="fas fa-link"></i> SkillLink
+            </a>
+            <ul class="nav-links">
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/categories">Skills</a></li>
+                <li><a href="/how-it-works">How it Works</a></li>
+                <li><a href="/mentors">Find Mentors</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="/learners/login" class="btn btn-outline">Login</a>
+                <a href="/learners/signup" class="btn btn-primary">Join Now</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Learn <span class="highlight">Unique Skills</span> Live with Global Mentors</h1>
+                    <p>Master pottery, violin, martial arts, and more through interactive video sessions with expert instructors from around the world</p>
+                    
+                    <div class="hero-search">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="search-input" placeholder="What skill would you like to learn? (e.g., guitar, pottery, archery)">
+                            <button class="search-btn" onclick="searchSkills()">
+                                <i class="fas fa-search"></i> Find Mentors
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <h3>500+</h3>
+                            <p>Expert Mentors</p>
+                        </div>
+                        <div class="hero-stat">
+                            <h3>50+</h3>
+                            <p>Unique Skills</p>
+                        </div>
+                        <div class="hero-stat">
+                            <h3>190+</h3>
+                            <p>Countries</p>
+                        </div>
+                        <div class="hero-stat">
+                            <h3>10k+</h3>
+                            <p>Happy Students</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Explore Skill Categories</h2>
+                    <p>Discover unique learning opportunities across diverse creative and cultural disciplines</p>
+                </div>
+
+                <div class="categories-grid">
+                    <div class="category-card" onclick="window.location.href='/categories?filter=music'">
+                        <div class="category-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <h3>Music & Sound</h3>
+                        <p>Master musical instruments and sound production with professional musicians worldwide</p>
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <div class="number">85</div>
+                                <div class="label">Mentors</div>
+                            </div>
+                            <div class="category-stat">
+                                <div class="number">$45</div>
+                                <div class="label">Avg/Hour</div>
+                            </div>
+                            <div class="category-stat">
+                                <div class="number">12+</div>
+                                <div class="label">Skills</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="category-card" onclick="window.location.href='/categories?filter=crafts'">
+                        <div class="category-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3>Arts & Crafts</h3>
+                        <p>Create beautiful art and handmade crafts with skilled artisans and creative professionals</p>
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <div class="number">67</div>
+                                <div class="label">Mentors</div>
+                            </div>
+                            <div class="category-stat">
+                                <div class="number">$38</div>
+                                <div class="label">Avg/Hour</div>
+                            </div>
+                            <div class="category-stat">
+                                <div class="number">15+</div>
+                                <div class="label">Skills</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="category-card" onclick="window.location.href='/categories?filter=martial-arts'">
+                        <div class="category-icon">
+                            <i class="fas fa-fist-raised"></i>
+                        </div>
+                        <h3>Martial Arts</h3>
+                        <p>Learn self-defense and martial disciplines from traditional masters and modern instructors</p>
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <div class="number">52</div>
+                                <div class="label">Mentors</div>
+                            </div>
+                            <div class="category-stat">
+                                <div class="number">$55</div>
+                                <div class="label">Avg/Hour</div>
+                            </div>
+                            <div class="category-stat">
+                                <div class="number">8+</div>
+                                <div class="label">Skills</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="category-card" onclick="window.location.href='/categories?filter=lifestyle'">
+                        <div class="category-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h3>Lifestyle & Wellness</h3>
+                        <p>Enhance your daily life and well-being with expert guidance in health and lifestyle practices</p>
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <div class="number">91</div>
+                                <div class="label">Mentors</div>
+                            </div>
+                            <div class="category-stat">
+                                <div class="number">$35</div>
+                                <div class="label">Avg/Hour</div>
+                            </div>
+                            <div class="category-stat">
+                                <div class="number">20+</div>
+                                <div class="label">Skills</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="category-card" onclick="window.location.href='/categories?filter=sports'">
+                        <div class="category-icon">
+                            <i class="fas fa-running"></i>
+                        </div>
+                        <h3>Sports & Fitness</h3>
+                        <p>Improve your athletic performance and fitness with professional coaches and trainers</p>
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <div class="number">73</div>
+                                <div class="label">Mentors</div>
+                            </div>
+                            <div class="category-stat">
+                                <div class="number">$42</div>
+                                <div class="label">Avg/Hour</div>
+                            </div>
+                            <div class="category-stat">
+                                <div class="number">14+</div>
+                                <div class="label">Skills</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="category-card" onclick="window.location.href='/categories?filter=cultural'">
+                        <div class="category-icon">
+                            <i class="fas fa-globe-asia"></i>
+                        </div>
+                        <h3>Cultural Arts</h3>
+                        <p>Explore traditional and cultural practices with authentic masters from their native regions</p>
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <div class="number">34</div>
+                                <div class="label">Mentors</div>
+                            </div>
+                            <div class="category-stat">
+                                <div class="number">$48</div>
+                                <div class="label">Avg/Hour</div>
+                            </div>
+                            <div class="category-stat">
+                                <div class="number">10+</div>
+                                <div class="label">Skills</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="/categories" class="btn btn-primary btn-large">
+                        <i class="fas fa-th-large"></i> View All Categories
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Mentors -->
+        <section class="featured-mentors">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Meet Our Featured Mentors</h2>
+                    <p>Learn from passionate experts who love sharing their craft with dedicated students</p>
+                </div>
+
+                <div class="mentors-grid">
+                    <div class="mentor-card" onclick="window.location.href='/mentors/maria-santos'">
+                        <div class="mentor-header">
+                            <div class="mentor-avatar">MS</div>
+                            <div class="mentor-info">
+                                <h4>Maria Santos</h4>
+                                <p>Barcelona, Spain</p>
+                            </div>
+                        </div>
+                        <div class="mentor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-text">5.0 (89 reviews)</span>
+                        </div>
+                        <div class="mentor-skills">
+                            <span class="skill-tag">Classical Guitar</span>
+                            <span class="skill-tag">Flamenco</span>
+                            <span class="skill-tag">Music Theory</span>
+                        </div>
+                        <div class="mentor-footer">
+                            <div>
+                                <div class="mentor-price">$45</div>
+                                <div class="price-label">per hour</div>
+                            </div>
+                            <a href="/mentors/maria-santos" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+
+                    <div class="mentor-card" onclick="window.location.href='/mentors/takeshi-yamamoto'">
+                        <div class="mentor-header">
+                            <div class="mentor-avatar">TY</div>
+                            <div class="mentor-info">
+                                <h4>Takeshi Yamamoto</h4>
+                                <p>Tokyo, Japan</p>
+                            </div>
+                        </div>
+                        <div class="mentor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-text">4.9 (156 reviews)</span>
+                        </div>
+                        <div class="mentor-skills">
+                            <span class="skill-tag">Kendo</span>
+                            <span class="skill-tag">Sword Fighting</span>
+                            <span class="skill-tag">Meditation</span>
+                        </div>
+                        <div class="mentor-footer">
+                            <div>
+                                <div class="mentor-price">$65</div>
+                                <div class="price-label">per hour</div>
+                            </div>
+                            <a href="/mentors/takeshi-yamamoto" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+
+                    <div class="mentor-card" onclick="window.location.href='/mentors/elena-rodriguez'">
+                        <div class="mentor-header">
+                            <div class="mentor-avatar">ER</div>
+                            <div class="mentor-info">
+                                <h4>Elena Rodriguez</h4>
+                                <p>Mexico City, Mexico</p>
+                            </div>
+                        </div>
+                        <div class="mentor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-text">4.8 (92 reviews)</span>
+                        </div>
+                        <div class="mentor-skills">
+                            <span class="skill-tag">Pottery</span>
+                            <span class="skill-tag">Ceramics</span>
+                            <span class="skill-tag">Traditional Arts</span>
+                        </div>
+                        <div class="mentor-footer">
+                            <div>
+                                <div class="mentor-price">$38</div>
+                                <div class="price-label">per hour</div>
+                            </div>
+                            <a href="/mentors/elena-rodriguez" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="/mentors" class="btn btn-outline btn-large">
+                        <i class="fas fa-users"></i> View All Mentors
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="how-it-works">
+            <div class="container">
+                <div class="section-title">
+                    <h2>How SkillLink Works</h2>
+                    <p>Start learning unique skills in just four simple steps</p>
+                </div>
+
+                <div class="steps-grid">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <h3>Discover</h3>
+                        <p>Browse our diverse skill categories and find the perfect mentor for your learning goals</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <h3>Book</h3>
+                        <p>Choose your preferred time slot and schedule a live video session with your chosen mentor</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <h3>Learn</h3>
+                        <p>Join interactive video sessions and receive personalized, real-time instruction and feedback</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <h3>Master</h3>
+                        <p>Practice with provided materials, track your progress, and continue your learning journey</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="/how-it-works" class="btn btn-outline btn-large">
+                        <i class="fas fa-play-circle"></i> See Detailed Process
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials">
+            <div class="container">
+                <div class="section-title">
+                    <h2>What Our Students Say</h2>
+                    <p>Real experiences from learners who've mastered new skills with SkillLink</p>
+                </div>
+
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">SkillLink connected me with an amazing pottery mentor from Greece. In just 6 sessions, I went from complete beginner to creating my own ceramic pieces. The live feedback was invaluable!</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">JM</div>
+                            <div class="author-info">
+                                <h5>Jessica Miller</h5>
+                                <p>Pottery Student • New York, USA</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">Learning violin through SkillLink has been incredible. My mentor in Vienna gives me personalized lessons that fit my schedule. The quality of instruction is better than local options!</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">DL</div>
+                            <div class="author-info">
+                                <h5>David Lee</h5>
+                                <p>Violin Student • Singapore</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">As someone interested in Japanese culture, finding an authentic kendo master on SkillLink was perfect. The traditional training methods combined with modern technology created an amazing experience.</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">SK</div>
+                            <div class="author-info">
+                                <h5>Sarah Kim</h5>
+                                <p>Kendo Student • London, UK</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to Learn Something Amazing?</h2>
+                <p>Join thousands of students worldwide who are mastering unique skills with expert mentors</p>
+                <div class="cta-buttons">
+                    <a href="/categories" class="btn btn-primary btn-large">
+                        <i class="fas fa-rocket"></i> Start Learning Today
+                    </a>
+                    <a href="/mentors/join" class="btn btn-outline btn-large">
+                        <i class="fas fa-chalkboard-teacher"></i> Become a Mentor
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SkillLink</h3>
+                    <p>Connecting learners with skilled mentors worldwide for unique, hands-on learning experiences. Built for passionate learners who want to explore beyond traditional education.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>For Learners</h3>
+                    <ul>
+                        <li><a href="/categories">Browse Skills</a></li>
+                        <li><a href="/mentors">Find Mentors</a></li>
+                        <li><a href="/how-it-works">How it Works</a></li>
+                        <li><a href="/pricing">Pricing</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>For Mentors</h3>
+                    <ul>
+                        <li><a href="/mentors/join">Become a Mentor</a></li>
+                        <li><a href="/mentor-resources">Resources</a></li>
+                        <li><a href="/mentor-support">Support</a></li>
+                        <li><a href="/earnings">Earnings</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="/help">Help Center</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 SkillLink. All rights reserved. Made with 💚 for passionate learners worldwide.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Search functionality
+        function searchSkills() {
+            const searchInput = document.querySelector('.search-input');
+            const query = searchInput.value.trim();
+            
+            if (query) {
+                window.location.href = `/mentors?search=${encodeURIComponent(query)}`;
+            } else {
+                window.location.href = '/categories';
+            }
+        }
+
+        // Enter key search
+        document.querySelector('.search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchSkills();
+            }
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 2px 10px rgba(0, 183, 96, 0.1)';
+                header.style.borderBottom = '1px solid #00b760';
+            } else {
+                header.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                header.style.borderBottom = '1px solid #e9ecef';
+            }
+        });
+
+        // Animated counters for hero stats
+        function animateCounters() {
+            const counters = document.querySelectorAll('.hero-stat h3');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent.replace(/\D/g, ''));
+                const suffix = counter.textContent.replace(/\d/g, '');
+                let current = 0;
+                const increment = target / 100;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target + suffix;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + suffix;
+                    }
+                }, 20);
+            });
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('hero-stats')) {
+                        animateCounters();
+                    }
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.hero-stats, .category-card, .mentor-card, .testimonial-card, .step-item').forEach(el => {
+            if (!el.classList.contains('hero-stat')) {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            }
+            observer.observe(el);
+        });
+
+        // Search suggestions
+        const searchSuggestions = [
+            'Classical Guitar',
+            'Pottery',
+            'Kendo',
+            'Violin',
+            'Archery',
+            'Calligraphy',
+            'Yoga',
+            'Painting',
+            'Cooking',
+            'Traditional Dance'
+        ];
+
+        const searchInput = document.querySelector('.search-input');
+        
+        searchInput.addEventListener('focus', function() {
+            if (!this.value) {
+                const randomSuggestion = searchSuggestions[Math.floor(Math.random() * searchSuggestions.length)];
+                this.placeholder = `Try "${randomSuggestion}"...`;
+            }
+        });
+
+        searchInput.addEventListener('blur', function() {
+            this.placeholder = 'What skill would you like to learn? (e.g., guitar, pottery, archery)';
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Welcome message for new users
+        if (!localStorage.getItem('skilllink_visited')) {
+            setTimeout(() => {
+                console.log('Welcome to SkillLink! 🎯 Ready to learn something amazing?');
+                localStorage.setItem('skilllink_visited', 'true');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!-- Contact Page -->
+<section class="hero" style="background: linear-gradient(135deg, #1dbf73 0%, #19a463 100%); padding: 3rem 2rem;">
+    <div class="container">
+        <h1 style="font-size: 3rem; margin-bottom: 1rem; color: white; font-weight: 700;">Get in Touch</h1>
+        <p style="font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto; color: white;">
+            We're here to help you succeed on your learning journey. Reach out to us anytime.
+        </p>
+    </div>
+</section>
+
+<section style="padding: 4rem 2rem; background: #f7f7f7;">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: 1fr 400px; gap: 4rem; align-items: start;">
+            <!-- Contact Form -->
+            <div class="form-container" style="max-width: none;">
+                <h3 style="color: #222325; margin-bottom: 2rem;">Send us a Message</h3>
+                
+                <form action="/contact" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required class="form-input" placeholder="Your first name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required class="form-input" placeholder="Your last name">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" name="email" required class="form-input" placeholder="your.email@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Subject</label>
+                        <select name="subject" id="subject" class="form-select" required>
+                            <option value="">Select a topic</option>
+                            <option value="general">General Inquiry</option>
+                            <option value="technical">Technical Support</option>
+                            <option value="billing">Billing Question</option>
+                            <option value="mentor">Become a Mentor</option>
+                            <option value="partnership">Partnership Opportunity</option>
+                            <option value="feedback">Feedback & Suggestions</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea name="message" id="message" rows="6" required class="form-textarea" placeholder="How can we help you?"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-full">Send Message</button>
+                </form>
+            </div>
+            
+            <!-- Contact Information -->
+            <div>
+                <div style="background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <h4 style="color: #222325; margin-bottom: 1.5rem;">Contact Information</h4>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="width: 40px; height: 40px; background: #e7f7f0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-envelope" style="color: #1dbf73;"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; color: #222325;">Email</div>
+                                <div style="color: #62646a;">support@skilllink.com</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="width: 40px; height: 40px; background: #e7f7f0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-phone" style="color: #1dbf73;"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; color: #222325;">Phone</div>
+                                <div style="color: #62646a;">+1 (555) 123-4567</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 40px; height: 40px; background: #e7f7f0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-clock" style="color: #1dbf73;"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; color: #222325;">Support Hours</div>
+                                <div style="color: #62646a;">24/7 Available</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <h4 style="color: #222325; margin-bottom: 1.5rem;">Quick Help</h4>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <a href="/help/getting-started" style="display: flex; align-items: center; gap: 0.5rem; color: #1dbf73; text-decoration: none; padding: 0.5rem 0;">
+                            <i class="fas fa-book"></i>
+                            <span>Getting Started Guide</span>
+                        </a>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <a href="/help/faq" style="display: flex; align-items: center; gap: 0.5rem; color: #1dbf73; text-decoration: none; padding: 0.5rem 0;">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Frequently Asked Questions</span>
+                        </a>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <a href="/help/technical" style="display: flex; align-items: center; gap: 0.5rem; color: #1dbf73; text-decoration: none; padding: 0.5rem 0;">
+                            <i class="fas fa-tools"></i>
+                            <span>Technical Support</span>
+                        </a>
+                    </div>
+                    
+                    <div>
+                        <a href="/help/billing" style="display: flex; align-items: center; gap: 0.5rem; color: #1dbf73; text-decoration: none; padding: 0.5rem 0;">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Billing & Payments</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div style="background: #e7f7f0; border: 1px solid #1dbf73; border-radius: 8px; padding: 2rem; text-align: center;">
+                    <div style="margin-bottom: 1rem;">
+                        <i class="fas fa-headset" style="font-size: 2rem; color: #1dbf73;"></i>
+                    </div>
+                    <h4 style="color: #222325; margin-bottom: 1rem;">Need Immediate Help?</h4>
+                    <p style="color: #62646a; margin-bottom: 1.5rem; font-size: 0.9rem;">
+                        Our support team is available 24/7 to assist you with any questions or issues.
+                    </p>
+                    <a href="/chat" class="btn btn-primary" style="font-size: 0.9rem;">Start Live Chat</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Office Locations -->
+<section style="padding: 4rem 2rem; background: white;">
+    <div class="container">
+        <h2 class="section-title" style="margin-bottom: 3rem;">Our Global Presence</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div style="text-align: center; padding: 2rem;">
+                <div style="width: 80px; height: 80px; background: #e7f7f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">🌎</div>
+                <h3 style="color: #222325; margin-bottom: 1rem;">San Francisco, USA</h3>
+                <p style="color: #62646a; margin-bottom: 1rem;">Main Headquarters</p>
+                <p style="color: #62646a; font-size: 0.9rem;">
+                    123 Tech Street<br>
+                    San Francisco, CA 94105<br>
+                    United States
+                </p>
+            </div>
+            
+            <div style="text-align: center; padding: 2rem;">
+                <div style="width: 80px; height: 80px; background: #e7f7f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">🌍</div>
+                <h3 style="color: #222325; margin-bottom: 1rem;">London, UK</h3>
+                <p style="color: #62646a; margin-bottom: 1rem;">European Operations</p>
+                <p style="color: #62646a; font-size: 0.9rem;">
+                    456 Learning Lane<br>
+                    London SW1A 1AA<br>
+                    United Kingdom
+                </p>
+            </div>
+            
+            <div style="text-align: center; padding: 2rem;">
+                <div style="width: 80px; height: 80px; background: #e7f7f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">🌏</div>
+                <h3 style="color: #222325; margin-bottom: 1rem;">Singapore</h3>
+                <p style="color: #62646a; margin-bottom: 1rem;">Asia-Pacific Hub</p>
+                <p style="color: #62646a; font-size: 0.9rem;">
+                    789 Innovation Drive<br>
+                    Singapore 018956<br>
+                    Singapore
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

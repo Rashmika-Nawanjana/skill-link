@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.6;
+            color: #39424e;
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f9f5 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #ffffff;
+            color: #39424e;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #00b760;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #39424e;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00b760;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #00b760;
+            border: 1px solid #00b760;
+        }
+
+        .btn-outline:hover {
+            background: #00b760;
+            color: white;
+        }
+
+        .btn-primary {
+            background: #00b760;
+            color: white;
+            border: 1px solid #00b760;
+        }
+
+        .btn-primary:hover {
+            background: #009954;
+            border-color: #009954;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        .error-container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 8px 32px rgba(0, 183, 96, 0.1);
+            border: 1px solid #e8f9f5;
+        }
+
+        /* Error Icon & Animation */
+        .error-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .error-icon-bg {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #00b760, #009954);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error-icon i {
+            font-size: 3rem;
+            color: white;
+            z-index: 2;
+            position: relative;
+        }
+
+        .error-icon-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.1) 10px,
+                rgba(255, 255, 255, 0.1) 20px
+            );
+            animation: movePattern 3s linear infinite;
+        }
+
+        @keyframes movePattern {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Error Content */
+        .error-code {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #00b760;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 183, 96, 0.2);
+        }
+
+        .error-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .error-description {
+            font-size: 1.2rem;
+            color: #5f6c80;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Action Buttons */
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        /* Quick Links */
+        .quick-links {
+            background: #f8fffe;
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid #e8f9f5;
+            margin-bottom: 2rem;
+        }
+
+        .quick-links h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .quick-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #39424e;
+            transition: all 0.3s;
+            border: 1px solid #e9ecef;
+        }
+
+        .quick-link:hover {
+            border-color: #00b760;
+            box-shadow: 0 4px 12px rgba(0, 183, 96, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .quick-link i {
+            color: #00b760;
+            font-size: 1.2rem;
+            width: 20px;
+        }
+
+        .quick-link span {
+            font-weight: 500;
+        }
+
+        /* Help Section */
+        .help-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid #e9ecef;
+            text-align: left;
+        }
+
+        .help-section h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .help-section h3 i {
+            color: #00b760;
+        }
+
+        .help-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .help-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            color: #5f6c80;
+            line-height: 1.5;
+        }
+
+        .help-list li i {
+            color: #00b760;
+            margin-top: 0.2rem;
+            width: 16px;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            background: linear-gradient(135deg, #00b760, #009954);
+            color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-info h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-methods {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .contact-method i {
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #39424e;
+            color: white;
+            padding: 2rem 0 1rem;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #00b760;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #a3a8af;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .footer-section ul li a:hover {
+            color: #00b760;
+        }
+
+        .footer-section p {
+            color: #a3a8af;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #525863;
+            padding-top: 1rem;
+            text-align: center;
+            color: #a3a8af;
+            font-size: 0.85rem;
+        }
+
+        /* Specific Error Styles */
+        .error-404 .error-code {
+            background: linear-gradient(135deg, #00b760, #009954);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .error-500 .error-icon-bg {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+        }
+
+        .error-500 .error-code {
+            color: #dc3545;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .error-container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+
+            .error-code {
+                font-size: 3rem;
+            }
+
+            .error-title {
+                font-size: 2rem;
+            }
+
+            .error-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .quick-links-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-methods {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) translateY(-50px);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05) translateY(-10px);
+            }
+            70% {
+                transform: scale(0.95) translateY(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error-container {
+            animation: bounceIn 0.8s ease-out;
+        }
+
+        .error-actions,
+        .quick-links,
+        .help-section {
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        /* Interactive Elements */
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .quick-link:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Status Indicators */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 183, 96, 0.1);
+            color: #00b760;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .status-indicator.error {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+
+        .status-indicator i {
+            font-size: 0.8rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">
+                <i class="fas fa-link"></i> SkillLink
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/categories">Skills</a></li>
+                <li><a href="/how-it-works">How it Works</a></li>
+                <li><a href="/mentors">Find Mentors</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="/learners/login" class="btn btn-outline">Login</a>
+                <a href="/learners/signup" class="btn btn-primary">Join Now</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="error-container">
+            <!-- Status Indicator -->
+            <div class="status-indicator <%= error.status === 404 ? '' : 'error' %>">
+                <i class="fas fa-<%= error.status === 404 ? 'search' : 'exclamation-triangle' %>"></i>
+                <span><%= error.status === 404 ? 'Page Not Found' : 'Server Error' %></span>
+            </div>
+
+            <!-- Error Icon -->
+            <div class="error-icon">
+                <div class="error-icon-bg">
+                    <i class="fas fa-<%= error.status === 404 ? 'search' : 'server' %>"></i>
+                </div>
+            </div>
+
+            <!-- Error Code -->
+            <div class="error-code error-<%= error.status %>">
+                <%= error.status %>
+            </div>
+
+            <!-- Error Title -->
+            <h1 class="error-title">
+                <% if (error.status === 404) { %>
+                    Oops! Page Not Found
+                <% } else if (error.status === 500) { %>
+                    Something Went Wrong
+                <% } else { %>
+                    Unexpected Error
+                <% } %>
+            </h1>
+
+            <!-- Error Description -->
+            <p class="error-description">
+                <%= error.message || error.description %>
+                <% if (error.status === 404) { %>
+                    The page you're looking for might have been moved, deleted, or you may have typed the wrong URL.
+                <% } else if (error.status === 500) { %>
+                    Our servers are experiencing technical difficulties. Please try again in a few moments.
+                <% } %>
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="error-actions">
+                <a href="/" class="btn btn-primary btn-large">
+                    <i class="fas fa-home"></i> Go Home
+                </a>
+                <button onclick="goBack()" class="btn btn-outline btn-large">
+                    <i class="fas fa-arrow-left"></i> Go Back
+                </button>
+                <% if (error.status === 500) { %>
+                <button onclick="retryPage()" class="btn btn-outline btn-large">
+                    <i class="fas fa-redo"></i> Try Again
+                </button>
+                <% } %>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="quick-links">
+                <h3>
+                    <i class="fas fa-compass"></i>
+                    Popular Destinations
+                </h3>
+                <div class="quick-links-grid">
+                    <a href="/categories" class="quick-link">
+                        <i class="fas fa-list"></i>
+                        <span>Browse Skills</span>
+                    </a>
+                    <a href="/mentors" class="quick-link">
+                        <i class="fas fa-users"></i>
+                        <span>Find Mentors</span>
+                    </a>
+                    <a href="/how-it-works" class="quick-link">
+                        <i class="fas fa-info-circle"></i>
+                        <span>How it Works</span>
+                    </a>
+                    <a href="/mentors/join" class="quick-link">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span>Become a Mentor</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Help Section -->
+            <div class="help-section">
+                <h3>
+                    <i class="fas fa-question-circle"></i>
+                    What can you do now?
+                </h3>
+                <ul class="help-list">
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Check the URL for any typos or spelling errors</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Use the search function to find what you're looking for</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Browse our skill categories to discover new learning opportunities</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Visit our help center for frequently asked questions</span>
+                    </li>
+                    <% if (error.status === 500) { %>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Wait a few minutes and try refreshing the page</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Clear your browser cache and cookies</span>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <h4>
+                    <i class="fas fa-headset"></i>
+                    Need Help? Contact Our Support Team
+                </h4>
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <i class="fas fa-envelope"></i>
+                        <span>support@skilllink.com</span>
+                    </div>
+                    <div class="contact-method">
+                        <i class="fas fa-comments"></i>
+                        <span>Live Chat (24/7)</span>
+                    </div>
+                    <div class="contact-method">
+                        <i class="fas fa-phone"></i>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SkillLink</h3>
+                    <p>Connecting learners with skilled mentors worldwide.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/categories">Skills</a></li>
+                        <li><a href="/mentors">Mentors</a></li>
+                        <li><a href="/help">Help Center</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms of Service</a></li>
+                        <li><a href="/status">System Status</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 SkillLink. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functions
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = '/';
+            }
+        }
+
+        function retryPage() {
+            window.location.reload();
+        }
+
+        // Search functionality
+        function searchSite() {
+            const query = prompt('What are you looking for?');
+            if (query && query.trim()) {
+                window.location.href = `/search?q=${encodeURIComponent(query.trim())}`;
+            }
+        }
+
+        // Contact methods interaction
+        document.querySelectorAll('.contact-method').forEach(method => {
+            method.addEventListener('click', function() {
+                const text = this.textContent.trim();
+                if (text.includes('@')) {
+                    window.location.href = `mailto:${text.split(' ').pop()}`;
+                } else if (text.includes('Live Chat')) {
+                    alert('Live chat would open here in a real application!');
+                } else if (text.includes('+')) {
+                    window.location.href = `tel:${text.split(' ').pop()}`;
+                }
+            });
+        });
+
+        // Auto-retry for server errors
+        <% if (error.status === 500) { %>
+        let retryCount = 0;
+        const maxRetries = 3;
+        
+        function autoRetry() {
+            if (retryCount < maxRetries) {
+                retryCount++;
+                console.log(`Auto-retry attempt ${retryCount}/${maxRetries}`);
+                
+                setTimeout(() => {
+                    fetch(window.location.href)
+                        .then(response => {
+                            if (response.ok) {
+                                window.location.reload();
+                            } else if (retryCount < maxRetries) {
+                                autoRetry();
+                            }
+                        })
+                        .catch(() => {
+                            if (retryCount < maxRetries) {
+                                autoRetry();
+                            }
+                        });
+                }, 5000 * retryCount); // Exponential backoff
+            }
+        }
+        
+        // Start auto-retry after 10 seconds
+        setTimeout(autoRetry, 10000);
+        <% } %>
+
+        // Error reporting
+        function reportError() {
+            const errorData = {
+                status: '<%= error.status %>',
+                message: '<%= error.message %>',
+                url: window.location.href,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent
+            };
+            
+            // In a real application, this would send to an error tracking service
+            console.log('Error reported:', errorData);
+            alert('Error report sent! Our team will investigate this issue.');
+        }
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case '/':
+                        e.preventDefault();
+                        searchSite();
+                        break;
+                    case 'h':
+                        e.preventDefault();
+                        window.location.href = '/';
+                        break;
+                }
+            }
+        });
+
+        // Analytics for error pages (in real app)
+        console.log('Error page viewed:', {
+            status: '<%= error.status %>',
+            path: window.location.pathname,
+            referrer: document.referrer
+        });
+    </script>
+</body>
+</html>

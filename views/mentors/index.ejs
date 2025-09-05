@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.6;
+            color: #39424e;
+            background-color: #f8fffe;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #ffffff;
+            color: #39424e;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #00b760;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #39424e;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #00b760;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #00b760;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #00b760;
+            border: 1px solid #00b760;
+        }
+
+        .btn-outline:hover {
+            background: #00b760;
+            color: white;
+        }
+
+        .btn-primary {
+            background: #00b760;
+            color: white;
+            border: 1px solid #00b760;
+        }
+
+        .btn-primary:hover {
+            background: #009954;
+            border-color: #009954;
+        }
+
+        /* Main content */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Search & Filter Section */
+        .search-section {
+            background: white;
+            padding: 2rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .search-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #39424e;
+            margin-bottom: 0.5rem;
+        }
+
+        .search-header p {
+            font-size: 1.1rem;
+            color: #5f6c80;
+        }
+
+        .search-filters {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #00b760;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #00b760;
+        }
+
+        .search-btn {
+            padding: 0.75rem 1.5rem;
+            background: #00b760;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #009954;
+        }
+
+        /* Results Section */
+        .results-section {
+            padding: 2rem 0;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-count {
+            font-size: 1.1rem;
+            color: #5f6c80;
+        }
+
+        .sort-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sort-dropdown label {
+            font-weight: 600;
+            color: #39424e;
+        }
+
+        .sort-dropdown select {
+            padding: 0.5rem;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            background: white;
+        }
+
+        /* Mentor Cards */
+        .mentors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .mentor-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .mentor-card:hover {
+            border-color: #00b760;
+            box-shadow: 0 8px 24px rgba(0, 183, 96, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .mentor-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .mentor-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00b760, #009954);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .mentor-info h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 0.25rem;
+        }
+
+        .mentor-location {
+            color: #5f6c80;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .mentor-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #ffc107;
+        }
+
+        .rating-text {
+            color: #5f6c80;
+            font-size: 0.9rem;
+        }
+
+        .mentor-specialties {
+            margin-bottom: 1rem;
+        }
+
+        .mentor-specialties h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #39424e;
+            margin-bottom: 0.5rem;
+        }
+
+        .specialty-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .specialty-tag {
+            background: #e8f9f5;
+            color: #00b760;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .mentor-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8fffe;
+            border-radius: 8px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #00b760;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #5f6c80;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mentor-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mentor-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #39424e;
+        }
+
+        .price-label {
+            font-size: 0.9rem;
+            color: #5f6c80;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .pagination a {
+            padding: 0.5rem 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #39424e;
+            transition: all 0.3s;
+        }
+
+        .pagination a:hover,
+        .pagination a.active {
+            background: #00b760;
+            color: white;
+            border-color: #00b760;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .loading i {
+            font-size: 2rem;
+            color: #00b760;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #e9ecef;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            color: #39424e;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: #5f6c80;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #39424e;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #00b760;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #a3a8af;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #00b760;
+        }
+
+        .footer-section p {
+            color: #a3a8af;
+            line-height: 1.6;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #525863;
+            padding-top: 2rem;
+            text-align: center;
+            color: #a3a8af;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .search-filters {
+                grid-template-columns: 1fr;
+            }
+
+            .mentors-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mentor-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .results-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">
+                <i class="fas fa-link"></i> SkillLink
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/categories">Skills</a></li>
+                <li><a href="/how-it-works">How it Works</a></li>
+                <li><a href="/mentors" class="active">Find Mentors</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="/learners/login" class="btn btn-outline">Login</a>
+                <a href="/learners/signup" class="btn btn-primary">Join Now</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Search & Filter Section -->
+        <section class="search-section">
+            <div class="container">
+                <div class="search-header">
+                    <h1>Find Your Perfect Mentor</h1>
+                    <p>Connect with expert instructors ready to guide your learning journey</p>
+                </div>
+
+                <div class="search-filters">
+                    <div class="filter-group">
+                        <label for="search">Search Mentors or Skills</label>
+                        <input type="text" id="search" class="search-input" placeholder="e.g. violin, pottery, martial arts...">
+                    </div>
+                    <div class="filter-group">
+                        <label for="category">Category</label>
+                        <select id="category" class="filter-select">
+                            <option value="">All Categories</option>
+                            <option value="music">Music & Sound</option>
+                            <option value="crafts">Arts & Crafts</option>
+                            <option value="martial-arts">Martial Arts</option>
+                            <option value="sports">Sports & Fitness</option>
+                            <option value="lifestyle">Lifestyle & Wellness</option>
+                            <option value="cultural">Cultural Arts</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="price">Price Range</label>
+                        <select id="price" class="filter-select">
+                            <option value="">Any Price</option>
+                            <option value="0-25">$0 - $25/hr</option>
+                            <option value="25-50">$25 - $50/hr</option>
+                            <option value="50-75">$50 - $75/hr</option>
+                            <option value="75+">$75+/hr</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section">
+            <div class="container">
+                <div class="results-header">
+                    <div class="results-count">
+                        <strong>127 mentors</strong> found matching your criteria
+                    </div>
+                    <div class="sort-dropdown">
+                        <label for="sort">Sort by:</label>
+                        <select id="sort">
+                            <option value="relevance">Relevance</option>
+                            <option value="rating">Highest Rated</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="newest">Newest First</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mentors-grid" id="mentors-grid">
+                    <!-- Sample Mentor Cards -->
+                    <div class="mentor-card" onclick="window.location.href='/mentors/maria-santos'">
+                        <div class="mentor-header">
+                            <div class="mentor-avatar">MS</div>
+                            <div class="mentor-info">
+                                <h3>Maria Santos</h3>
+                                <div class="mentor-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Barcelona, Spain
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mentor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-text">5.0 (89 reviews)</span>
+                        </div>
+
+                        <div class="mentor-specialties">
+                            <h4>Specializes in:</h4>
+                            <div class="specialty-tags">
+                                <span class="specialty-tag">Classical Guitar</span>
+                                <span class="specialty-tag">Flamenco</span>
+                                <span class="specialty-tag">Music Theory</span>
+                            </div>
+                        </div>
+
+                        <div class="mentor-stats">
+                            <div class="stat">
+                                <div class="stat-number">450+</div>
+                                <div class="stat-label">Sessions</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">8</div>
+                                <div class="stat-label">Years Exp</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">95%</div>
+                                <div class="stat-label">Response Rate</div>
+                            </div>
+                        </div>
+
+                        <div class="mentor-footer">
+                            <div>
+                                <div class="mentor-price">$45</div>
+                                <div class="price-label">per hour</div>
+                            </div>
+                            <a href="/mentors/maria-santos" class="btn btn-primary btn-small">
+                                View Profile
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mentor-card" onclick="window.location.href='/mentors/takeshi-yamamoto'">
+                        <div class="mentor-header">
+                            <div class="mentor-avatar">TY</div>
+                            <div class="mentor-info">
+                                <h3>Takeshi Yamamoto</h3>
+                                <div class="mentor-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Tokyo, Japan
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mentor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-text">4.9 (156 reviews)</span>
+                        </div>
+
+                        <div class="mentor-specialties">
+                            <h4>Specializes in:</h4>
+                            <div class="specialty-tags">
+                                <span class="specialty-tag">Kendo</span>
+                                <span class="specialty-tag">Sword Fighting</span>
+                                <span class="specialty-tag">Meditation</span>
+                            </div>
+                        </div>
+
+                        <div class="mentor-stats">
+                            <div class="stat">
+                                <div class="stat-number">680+</div>
+                                <div class="stat-label">Sessions</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">12</div>
+                                <div class="stat-label">Years Exp</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">Response Rate</div>
+                            </div>
+                        </div>
+
+                        <div class="mentor-footer">
+                            <div>
+                                <div class="mentor-price">$65</div>
+                                <div class="price-label">per hour</div>
+                            </div>
+                            <a href="/mentors/takeshi-yamamoto" class="btn btn-primary btn-small">
+                                View Profile
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mentor-card" onclick="window.location.href='/mentors/elena-rodriguez'">
+                        <div class="mentor-header">
+                            <div class="mentor-avatar">ER</div>
+                            <div class="mentor-info">
+                                <h3>Elena Rodriguez</h3>
+                                <div class="mentor-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Mexico City, Mexico
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mentor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-text">4.8 (92 reviews)</span>
+                        </div>
+
+                        <div class="mentor-specialties">
+                            <h4>Specializes in:</h4>
+                            <div class="specialty-tags">
+                                <span class="specialty-tag">Pottery</span>
+                                <span class="specialty-tag">Ceramics</span>
+                                <span class="specialty-tag">Traditional Arts</span>
+                            </div>
+                        </div>
+
+                        <div class="mentor-stats">
+                            <div class="stat">
+                                <div class="stat-number">320+</div>
+                                <div class="stat-label">Sessions</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">6</div>
+                                <div class="stat-label">Years Exp</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">92%</div>
+                                <div class="stat-label">Response Rate</div>
+                            </div>
+                        </div>
+
+                        <div class="mentor-footer">
+                            <div>
+                                <div class="mentor-price">$38</div>
+                                <div class="price-label">per hour</div>
+                            </div>
+                            <a href="/mentors/elena-rodriguez" class="btn btn-primary btn-small">
+                                View Profile
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- More mentor cards would be loaded here -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">...</a>
+                    <a href="#">12</a>
+                    <a href="#"><i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SkillLink</h3>
+                    <p>Connecting learners with skilled mentors worldwide for unique, hands-on learning experiences.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>For Learners</h3>
+                    <ul>
+                        <li><a href="/categories">Browse Skills</a></li>
+                        <li><a href="/mentors">Find Mentors</a></li>
+                        <li><a href="/how-it-works">How it Works</a></li>
+                        <li><a href="/pricing">Pricing</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>For Mentors</h3>
+                    <ul>
+                        <li><a href="/mentors/join">Become a Mentor</a></li>
+                        <li><a href="/mentor-resources">Resources</a></li>
+                        <li><a href="/mentor-support">Support</a></li>
+                        <li><a href="/earnings">Earnings</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="/help">Help Center</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 SkillLink. All rights reserved. Made with 💚 for passionate learners worldwide.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Search and filter functionality
+        document.querySelector('.search-btn').addEventListener('click', function() {
+            const searchTerm = document.getElementById('search').value;
+            const category = document.getElementById('category').value;
+            const price = document.getElementById('price').value;
+            
+            // Add loading state
+            const grid = document.getElementById('mentors-grid');
+            grid.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i><p>Searching mentors...</p></div>';
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Reset grid content (in real app, this would be filtered results)
+                location.reload();
+            }, 1000);
+        });
+
+        // Sort functionality
+        document.getElementById('sort').addEventListener('change', function() {
+            const sortValue = this.value;
+            // Implement sorting logic here
+            console.log('Sorting by:', sortValue);
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 2px 10px rgba(0, 183, 96, 0.1)';
+                header.style.borderBottom = '1px solid #00b760';
+            } else {
+                header.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                header.style.borderBottom = '1px solid #e9ecef';
+            }
+        });
+
+        // Real-time search
+        document.getElementById('search').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const mentorCards = document.querySelectorAll('.mentor-card');
+            
+            mentorCards.forEach(card => {
+                const mentorName = card.querySelector('h3').textContent.toLowerCase();
+                const specialties = card.querySelector('.mentor-specialties').textContent.toLowerCase();
+                
+                if (mentorName.includes(searchTerm) || specialties.includes(searchTerm) || searchTerm === '') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
