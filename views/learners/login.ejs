@@ -660,8 +660,6 @@
     <script>
         // Form validation and submission
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
             const email = document.getElementById('email');
             const password = document.getElementById('password');
             const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -681,6 +679,7 @@
             // Email validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!email.value || !emailRegex.test(email.value)) {
+                e.preventDefault();
                 document.getElementById('emailError').style.display = 'block';
                 email.classList.add('error');
                 isValid = false;
@@ -688,6 +687,7 @@
             
             // Password validation
             if (!password.value || password.value.length < 6) {
+                e.preventDefault();
                 document.getElementById('passwordError').style.display = 'block';
                 password.classList.add('error');
                 isValid = false;
@@ -699,23 +699,12 @@
                 loading.style.display = 'flex';
                 submitBtn.disabled = true;
                 
-                // Simulate login process
-                setTimeout(() => {
-                    // In a real app, this would make an API call
-                    if (email.value === 'demo@skilllink.com' && password.value === 'password') {
-                        // Success
-                        document.getElementById('formSuccess').style.display = 'block';
-                        setTimeout(() => {
-                            window.location.href = '/dashboard';
-                        }, 1500);
-                    } else {
-                        // Error
-                        document.getElementById('formError').style.display = 'block';
-                        btnText.style.display = 'inline';
-                        loading.style.display = 'none';
-                        submitBtn.disabled = false;
-                    }
-                }, 2000);
+                // Allow form to submit to backend
+                return true;
+            } else {
+                // Prevent submission if validation failed
+                e.preventDefault();
+                return false;
             }
         });
 

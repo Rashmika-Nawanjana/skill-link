@@ -1,5 +1,9 @@
 const express = require('express');
 const path = require('path');
+const session = require('express-session');
+const { testConnection, initDatabase } = require('./config/database');
+require('dotenv').config();
+
 const app = express();
 
 // View engine
@@ -12,6 +16,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Body parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Session middleware
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'fallback_secret_key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false, // Set to true in production with HTTPS
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
+
+// User authentication middleware (make user available in all templates)
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  res.locals.isAuthenticated = !!req.session.user;
+  next();
+});
 
 // Routes
 app.use('/', require('./routes/index'));
@@ -47,11 +69,30 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
+// Initialize database and start server
+async function startServer() {
+  try {
+    // Test database connection
+    await testConnection();
+    
+    // Initialize database (create tables if they don't exist)
+    await initDatabase();
+    
+    // Start server
+    if (require.main === module) {
+      app.listen(PORT, () => {
+        console.log(`SkillLink server running on http://localhost:${PORT}`);
+      });
+    }
+  } catch (error) {
+    console.error('Failed to start server:', error.message);
+    process.exit(1);
+  }
+}
+
 // Local development only
 if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`SkillLink server running on http://localhost:${PORT}`);
-  });
+  startServer();
 }
 
 module.exports = app;
